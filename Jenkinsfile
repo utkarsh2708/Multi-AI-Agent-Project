@@ -1,23 +1,23 @@
 pipeline{
     agent any
 
-    //environment {
-        // SONAR_PROJECT_KEY = 'LLMOPS'
-		// SONAR_SCANNER_HOME = tool 'Sonarqube'
-        // AWS_REGION = 'us-east-1'
-        // ECR_REPO = 'my-repo'
-        // IMAGE_TAG = 'latest'
-	//}
+    // environment {
+    //     SONAR_PROJECT_KEY = 'LLMOPS'
+	// 	SONAR_SCANNER_HOME = tool 'Sonarqube'
+    //     AWS_REGION = 'us-east-1'
+    //     ECR_REPO = 'my-repo'
+    //     IMAGE_TAG = 'latest'
+	// }
 
-    stage('Cloning Github repo to Jenkins'){
-    steps{
-        script{
-            echo 'Cloning Github repo to Jenkins............'
-            git branch: 'master',
-                credentialsId: 'github-token',
-                url: 'https://github.com/utkarsh2708/Multi-AI-Agent-Project.git'
+    stages{
+        stage('Cloning Github repo to Jenkins'){
+            steps{
+                script{
+                    echo 'Cloning Github repo to Jenkins............'
+                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-token', url: 'https://github.com/utkarsh2708/Multi-AI-Agent-Project.git']])
+                }
+            }
         }
-    }
 
     // stage('SonarQube Analysis'){
 	// 		steps {
@@ -68,7 +68,7 @@ pipeline{
     //             }
     //         }
     //     }
-    //  }
+     }
         
     }
 }
